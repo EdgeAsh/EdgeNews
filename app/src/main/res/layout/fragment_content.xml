@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <com.edge.edgenews.view.NoScrollViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    
+    <RadioGroup
+        android:id="@+id/rg_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/rb_home"
+            style="@style/BottomRadio"
+            android:background="@drawable/selector_img_home"
+            android:text="首页"
+            android:checked="true"
+             />
+        <RadioButton
+            android:id="@+id/rb_news"
+            style="@style/BottomRadio"
+            android:background="@drawable/selector_img_news"
+            android:text="新闻"
+            />
+        <RadioButton
+            android:id="@+id/rb_gov"
+            style="@style/BottomRadio"
+            android:background="@drawable/selector_img_service"
+            android:text="服务"
+            />
+        <RadioButton
+            android:id="@+id/rb_service"
+            style="@style/BottomRadio"
+            android:background="@drawable/selector_img_gov"
+            android:text="政务"
+            />
+        <RadioButton
+            android:id="@+id/rb_setting"
+            style="@style/BottomRadio"
+            android:background="@drawable/selector_img_setting"
+            android:text="设置"
+            />
+    </RadioGroup>
+
+</LinearLayout>
