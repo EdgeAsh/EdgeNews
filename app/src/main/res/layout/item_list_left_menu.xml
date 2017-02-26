@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#6777"
     android:gravity="center">
 
@@ -9,9 +9,11 @@
         android:id="@+id/tv_left_menu_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/menu_arr_normal"
+        android:drawableLeft="@drawable/selector_arr_left_menu"
         android:drawablePadding="5dp"
+        android:textColor="@color/selector_txt_left_menu"
         android:padding="10dp"
+        android:textSize="20sp"
         android:text="内容"/>
 
 </LinearLayout>

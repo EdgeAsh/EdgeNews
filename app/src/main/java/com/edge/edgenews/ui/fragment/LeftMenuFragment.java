@@ -2,6 +2,7 @@ package com.edge.edgenews.ui.fragment;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,10 +22,11 @@ import java.util.ArrayList;
 public class LeftMenuFragment extends BaseFragment{
     /**
      * 初始化布局，子类必须实现
-     * @return
      */
     // 用于存储NewsPager传递来的json数据
     private ArrayList<NewsData> data;
+
+    private int mCurrentPosition; // 记录当前条目位置
 
     @ViewInject(R.id.lv_left_menu)
     private ListView lv_left_menu;
@@ -45,8 +47,16 @@ public class LeftMenuFragment extends BaseFragment{
      */
     public void setData(NewsMenuData newsMenuData) {
         data = newsMenuData.data;
-        LeftMenuAdapter leftMenuAdapter = new LeftMenuAdapter();
+        final LeftMenuAdapter leftMenuAdapter = new LeftMenuAdapter();
         lv_left_menu.setAdapter(leftMenuAdapter);
+
+        lv_left_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                mCurrentPosition = position;   // 记录当前条目
+                leftMenuAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     class LeftMenuAdapter extends BaseAdapter{
@@ -72,6 +82,14 @@ public class LeftMenuFragment extends BaseFragment{
             TextView tv_left_menu_item = (TextView) view.findViewById(R.id.tv_left_menu_item);
             // 将data中的title显示在侧边栏中
             tv_left_menu_item.setText(getItem(position).title);
+            // 设置条目中字体和图片颜色
+            if(mCurrentPosition == position) {
+                //  当前条目与被选中的条目相同，设置条目的图片和字体颜色为红色
+                tv_left_menu_item.setEnabled(true);
+            }else {
+                //  其它条目为白色
+                tv_left_menu_item.setEnabled(false);
+            }
             return view;
         }
     }
