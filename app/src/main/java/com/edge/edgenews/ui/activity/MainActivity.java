@@ -36,7 +36,7 @@ public class MainActivity extends SlidingFragmentActivity {
         setBehindContentView(R.layout.left_menu);
         // 获取SlidingMenu，深层定制
         SlidingMenu slidingMenu = getSlidingMenu();
-        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN); // 全屏可滑动
         slidingMenu.setBehindOffset(700);
 
         initFragment();
@@ -55,6 +55,16 @@ public class MainActivity extends SlidingFragmentActivity {
         transaction.commit();  // 提交事务
     }
 
+    /**
+     * 获取侧边栏Fragment对象
+     * @return
+     */
+    public LeftMenuFragment getLeftMenu() {
+        FragmentManager fm = getSupportFragmentManager();
+        LeftMenuFragment leftMenuFragment = (LeftMenuFragment) fm.findFragmentByTag(TAG_LEFT_MENU);
+
+        return leftMenuFragment;
+    }
 
 
 

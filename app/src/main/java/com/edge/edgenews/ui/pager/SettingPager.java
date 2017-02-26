@@ -2,6 +2,7 @@ package com.edge.edgenews.ui.pager;
 
 import android.app.Activity;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.edge.edgenews.base.BasePager;
@@ -13,6 +14,7 @@ public class SettingPager extends BasePager {
 
     public SettingPager(Activity activity) {
         super(activity);
+        ib_titlebar.setVisibility(View.GONE);
     }
     @Override
     public void initData() {

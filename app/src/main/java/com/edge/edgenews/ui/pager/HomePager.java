@@ -3,6 +3,7 @@ package com.edge.edgenews.ui.pager;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.edge.edgenews.base.BasePager;
@@ -14,6 +15,7 @@ public class HomePager extends BasePager {
 
     public HomePager(Activity activity) {
         super(activity);
+        ib_titlebar.setVisibility(View.GONE);
     }
     @Override
     public void initData() {
