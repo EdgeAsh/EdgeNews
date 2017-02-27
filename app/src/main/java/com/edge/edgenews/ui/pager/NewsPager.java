@@ -1,6 +1,7 @@
 package com.edge.edgenews.ui.pager;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -14,11 +15,13 @@ import com.edge.edgenews.ui.pager.menudetail.InteractMenuDetailPager;
 import com.edge.edgenews.ui.pager.menudetail.NewsMenuDetailPager;
 import com.edge.edgenews.ui.pager.menudetail.PhotoMenuDetailPager;
 import com.edge.edgenews.ui.pager.menudetail.TopicMenuDetailPager;
+import com.edge.edgenews.utils.CacheUtil;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
 import java.util.ArrayList;
@@ -37,21 +40,32 @@ public class NewsPager extends BasePager {
     @Override
     public void initData() {
         tv_titlebar.setText("新闻");
-//        TextView view = new TextView(mActivity);
-//        view.setText("新闻");
-//        view.setTextSize(20);
-//        view.setGravity(Gravity.CENTER);
-//        fl_basepager.addView(view);
+        // 1，查看本地有没有缓存
+        // 2，如果有，从缓存取数据
+        String result = CacheUtil.getCache(Constants.URL.URL_CATEGORIES,mActivity);
+        if(!TextUtils.isEmpty(result)) {
+            // 有缓存,在缓存中取
+            System.out.println("在缓存中取数据。。。。。。。");
+            processResult(result);
+        }
+        // 有缓存也访问服务器，为了更新数据
+        getDataFromServer();
 
+
+    }
+
+    private void getDataFromServer() {
         // 请求数据
         HttpUtils httpUtils = new HttpUtils();
 
         httpUtils.send(HttpMethod.GET, Constants.URL.URL_CATEGORIES, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                String result  = responseInfo.result;
+                String result  = responseInfo.result;   // 获取json数据
                 // 处理数据
                 processResult(result);
+                // 将json数据写如本地缓存
+                CacheUtil.setCache(Constants.URL.URL_CATEGORIES,result,mActivity);
             }
 
             @Override
