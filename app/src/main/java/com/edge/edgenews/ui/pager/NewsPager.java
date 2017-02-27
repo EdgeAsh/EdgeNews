@@ -37,11 +37,11 @@ public class NewsPager extends BasePager {
     @Override
     public void initData() {
         tv_titlebar.setText("新闻");
-        TextView view = new TextView(mActivity);
-        view.setText("新闻");
-        view.setTextSize(20);
-        view.setGravity(Gravity.CENTER);
-        fl_basepager.addView(view);
+//        TextView view = new TextView(mActivity);
+//        view.setText("新闻");
+//        view.setTextSize(20);
+//        view.setGravity(Gravity.CENTER);
+//        fl_basepager.addView(view);
 
         // 请求数据
         HttpUtils httpUtils = new HttpUtils();
@@ -75,12 +75,15 @@ public class NewsPager extends BasePager {
         leftMenuFragment.setData(newsMenuData);
 //        System.out.println("newsMenuData="+newsMenuData);
 
-        // 初始化菜单详情页
+        // 初始化4ge菜单详情页
         mMenuDetailPager = new ArrayList<BaseMenuDetailPager>();
         mMenuDetailPager.add(new NewsMenuDetailPager(mActivity));
         mMenuDetailPager.add(new TopicMenuDetailPager(mActivity));
         mMenuDetailPager.add(new PhotoMenuDetailPager(mActivity));
         mMenuDetailPager.add(new InteractMenuDetailPager(mActivity));
+
+        // NewsPager的默认初始化页面是NewsMenuDetailPager
+        setCurrentMenuPager(0);
     }
 
     /**

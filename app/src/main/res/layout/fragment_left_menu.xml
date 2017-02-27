@@ -3,10 +3,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#666">
+    android:background="#6666">
 
     <ListView
         android:layout_marginTop="100dp"
+        android:divider="@null"
         android:id="@+id/lv_left_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

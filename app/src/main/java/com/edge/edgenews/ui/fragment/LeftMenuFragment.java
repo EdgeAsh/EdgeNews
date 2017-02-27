@@ -13,6 +13,7 @@ import com.edge.edgenews.domain.NewsMenuData;
 import com.edge.edgenews.domain.NewsMenuData.NewsData;
 import com.edge.edgenews.ui.activity.MainActivity;
 import com.edge.edgenews.ui.pager.NewsPager;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -60,8 +61,16 @@ public class LeftMenuFragment extends BaseFragment{
 
                 // 通知NewsPager切换页面
                 setNewsMenuDetailPager(position);
+                // 侧边栏点击事件结束，自动隐藏
+                toggle();
             }
         });
+    }
+
+    private void toggle() {
+        // 获取SlidingMenu对象
+        SlidingMenu slidingMenu = ((MainActivity)mActivity).getSlidingMenu();
+        slidingMenu.toggle();// 开关slidingMenu状态，如果开就关，如果关就开
     }
 
     private void setNewsMenuDetailPager(int position) {
