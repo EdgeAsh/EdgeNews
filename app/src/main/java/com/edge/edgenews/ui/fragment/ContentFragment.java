@@ -95,6 +95,12 @@ public class ContentFragment extends BaseFragment {
         setSlidingMenuEnable(false); // 进入首页就使slidingMenu失效，无需再点击主页
     }
 
+    // 获取NewsPager,供LeftMenu使用
+    public NewsPager getNewsPager() {
+
+        return (NewsPager)mPagers.get(1);
+    }
+
     class ContentAdapter extends PagerAdapter {
 
         @Override

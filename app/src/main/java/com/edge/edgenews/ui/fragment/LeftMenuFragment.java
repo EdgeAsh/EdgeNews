@@ -11,6 +11,8 @@ import com.edge.edgenews.R;
 import com.edge.edgenews.base.BaseFragment;
 import com.edge.edgenews.domain.NewsMenuData;
 import com.edge.edgenews.domain.NewsMenuData.NewsData;
+import com.edge.edgenews.ui.activity.MainActivity;
+import com.edge.edgenews.ui.pager.NewsPager;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -55,8 +57,23 @@ public class LeftMenuFragment extends BaseFragment{
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 mCurrentPosition = position;   // 记录当前条目
                 leftMenuAdapter.notifyDataSetChanged();
+
+                // 通知NewsPager切换页面
+                setNewsMenuDetailPager(position);
             }
         });
+    }
+
+    private void setNewsMenuDetailPager(int position) {
+        // 获取NewsPager对象
+        // 1,获取MainActivity对象
+        // 2,通过MainActivity获取ContentFragment对象
+        // 3,通过ContentFragment获取NewsPager对象
+        ContentFragment contentFragment = ((MainActivity)mActivity).getContentFragment();
+        NewsPager newsPager = contentFragment.getNewsPager();
+
+        // 填充NewsMenuDetailPager
+        newsPager.setCurrentMenuPager(position);
     }
 
     class LeftMenuAdapter extends BaseAdapter{

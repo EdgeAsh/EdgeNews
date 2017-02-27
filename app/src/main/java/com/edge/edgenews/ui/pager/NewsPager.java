@@ -4,11 +4,16 @@ import android.app.Activity;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import com.edge.edgenews.base.BaseMenuDetailPager;
 import com.edge.edgenews.domain.NewsMenuData;
 import com.edge.edgenews.global.Constants;
 import com.edge.edgenews.base.BasePager;
 import com.edge.edgenews.ui.activity.MainActivity;
 import com.edge.edgenews.ui.fragment.LeftMenuFragment;
+import com.edge.edgenews.ui.pager.menudetail.InteractMenuDetailPager;
+import com.edge.edgenews.ui.pager.menudetail.NewsMenuDetailPager;
+import com.edge.edgenews.ui.pager.menudetail.PhotoMenuDetailPager;
+import com.edge.edgenews.ui.pager.menudetail.TopicMenuDetailPager;
 import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -16,10 +21,15 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
+import java.util.ArrayList;
+
 /**
  * Created by edge on 25/02/2017.
  */
 public class NewsPager extends BasePager {
+
+    // 创建集合，便于管理四个MenuDetailPager
+    private ArrayList<BaseMenuDetailPager> mMenuDetailPager;
 
     public NewsPager(Activity activity) {
         super(activity);
@@ -64,5 +74,23 @@ public class NewsPager extends BasePager {
         LeftMenuFragment leftMenuFragment = ((MainActivity)mActivity).getLeftMenu();
         leftMenuFragment.setData(newsMenuData);
 //        System.out.println("newsMenuData="+newsMenuData);
+
+        // 初始化菜单详情页
+        mMenuDetailPager = new ArrayList<BaseMenuDetailPager>();
+        mMenuDetailPager.add(new NewsMenuDetailPager(mActivity));
+        mMenuDetailPager.add(new TopicMenuDetailPager(mActivity));
+        mMenuDetailPager.add(new PhotoMenuDetailPager(mActivity));
+        mMenuDetailPager.add(new InteractMenuDetailPager(mActivity));
+    }
+
+    /**
+     * 给NewPager的FrameLayout填充布局
+     * @param position
+     */
+    public void setCurrentMenuPager(int position) {
+        BaseMenuDetailPager detailPager = mMenuDetailPager.get(position);
+        //先移除之前的view
+        fl_basepager.removeAllViews();
+        fl_basepager.addView(detailPager.mRootView);
     }
 }
