@@ -65,6 +65,9 @@ public class LeftMenuFragment extends BaseFragment{
                 toggle();
             }
         });
+
+        // 重置侧边栏条目位置
+        mCurrentPosition =0;
     }
 
     private void toggle() {

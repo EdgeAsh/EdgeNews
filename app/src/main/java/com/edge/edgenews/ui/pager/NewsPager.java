@@ -33,6 +33,7 @@ public class NewsPager extends BasePager {
 
     // 创建集合，便于管理四个MenuDetailPager
     private ArrayList<BaseMenuDetailPager> mMenuDetailPager;
+    private NewsMenuData mNewsMenuData;
 
     public NewsPager(Activity activity) {
         super(activity);
@@ -82,16 +83,16 @@ public class NewsPager extends BasePager {
     private void processResult(String result) {
         // 使用gson框剪解析json
         Gson gson = new Gson();
-        NewsMenuData newsMenuData = gson.fromJson(result, NewsMenuData.class);
+        mNewsMenuData = gson.fromJson(result, NewsMenuData.class);
 
         // 获取LeftMenuFragment对象，传递数据
         LeftMenuFragment leftMenuFragment = ((MainActivity)mActivity).getLeftMenu();
-        leftMenuFragment.setData(newsMenuData);
+        leftMenuFragment.setData(mNewsMenuData);
 //        System.out.println("newsMenuData="+newsMenuData);
 
         // 初始化4ge菜单详情页
         mMenuDetailPager = new ArrayList<BaseMenuDetailPager>();
-        mMenuDetailPager.add(new NewsMenuDetailPager(mActivity));
+        mMenuDetailPager.add(new NewsMenuDetailPager(mActivity,mNewsMenuData.data.get(0).children));
         mMenuDetailPager.add(new TopicMenuDetailPager(mActivity));
         mMenuDetailPager.add(new PhotoMenuDetailPager(mActivity));
         mMenuDetailPager.add(new InteractMenuDetailPager(mActivity));
@@ -106,8 +107,13 @@ public class NewsPager extends BasePager {
      */
     public void setCurrentMenuPager(int position) {
         BaseMenuDetailPager detailPager = mMenuDetailPager.get(position);
+        // 初始化NewsMenuDetailPager中的数据
+        detailPager.initData();
         //先移除之前的view
         fl_basepager.removeAllViews();
         fl_basepager.addView(detailPager.mRootView);
+
+        //设置标题栏文本，随菜单详情页改变
+        tv_titlebar.setText(mNewsMenuData.data.get(position).title);
     }
 }
