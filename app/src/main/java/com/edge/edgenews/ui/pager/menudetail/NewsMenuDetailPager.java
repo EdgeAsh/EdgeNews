@@ -15,17 +15,27 @@ import com.edge.edgenews.ui.activity.MainActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 
 
 /**
  * 新闻菜单详情-新闻
+ * ViewPagerIndicator使用流程
+ * 1，引入library库
+ * 2，布局文件中添加ViewPagerIndicator
+ * 3，将ViewPagerIndicator与ViewPager关联，重写ViewPager的getPageTitle方法，ViewPager状态侦听设给indicator
+ * 4，设置activity主题样式
+ * 5，进入源码修改indicator的属性，修改文字，图片等
  * Created by edge on 27/02/2017.
  */
 public class NewsMenuDetailPager extends BaseMenuDetailPager implements ViewPager.OnPageChangeListener {
     @ViewInject(R.id.vp_menu_detail_news)
     private ViewPager vp_menu_detail_news;
+    @ViewInject(R.id.tab_indicator)
+    private TabPageIndicator tab_indicator;
 
     private ArrayList<NewsMenuData.NewsTabData> mTabList;//
     private ArrayList<TabDetailPager> mTabPagers;//
@@ -58,7 +68,11 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager implements ViewPage
         vp_menu_detail_news.setAdapter(new NewsMenuDetailAdapter());
 
         // 设置页面切换侦听，跟据页面确定侧边栏是否可以画出
-        vp_menu_detail_news.setOnPageChangeListener(this);
+//        vp_menu_detail_news.setOnPageChangeListener(this);
+
+        // 将ViewPager与Indicator关联，此方法在viewpager设置数据后执行
+        tab_indicator.setViewPager(vp_menu_detail_news);
+        tab_indicator.setOnPageChangeListener(this);// 将ViewPager的侦听设置给indicator
     }
 
     @Override
@@ -101,6 +115,11 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager implements ViewPage
     class NewsMenuDetailAdapter extends PagerAdapter {
 
         @Override
+        public CharSequence getPageTitle(int position) {
+            return mTabList.get(position).title;
+        }
+
+        @Override
         public int getCount() {
             return mTabPagers.size();
         }
@@ -122,5 +141,12 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager implements ViewPage
         public boolean isViewFromObject(View view, Object object) {
             return view == object;
         }
+    }
+
+    @OnClick(R.id.iv_news_cate_arr)
+    public void nextPage(View view){ //滑动到下一页
+        int currentItem = vp_menu_detail_news.getCurrentItem();
+        currentItem++;
+        vp_menu_detail_news.setCurrentItem(currentItem);
     }
 }
