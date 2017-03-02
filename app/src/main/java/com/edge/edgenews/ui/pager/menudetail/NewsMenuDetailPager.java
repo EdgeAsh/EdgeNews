@@ -62,7 +62,7 @@ public class NewsMenuDetailPager extends BaseMenuDetailPager implements ViewPage
         mTabPagers = new ArrayList<TabDetailPager>();
         for (NewsMenuData.NewsTabData tabData: mTabList) {
             // 创建一个页签
-            mTabPagers.add(new TabDetailPager(mActivity,tabData.title));
+            mTabPagers.add(new TabDetailPager(mActivity,tabData));
         }
 
         vp_menu_detail_news.setAdapter(new NewsMenuDetailAdapter());
